@@ -92,10 +92,6 @@ function makeBroccoli() {
     })
 }
 
-// (async()=>{
-//   await makeBroccoli()
-
-// })
 
 makeBroccoli()
   .then(exists=>{
@@ -104,21 +100,37 @@ makeBroccoli()
   })
   .catch(error=>console.log(error))
 
-
-
-
-
 // Bonus 2 - Promise all
-// ...
-const BrusselSprout = () =>{
-  return Promise.all(brusselsSprouts.map( async(step,i) => {
-    return  obtainInstruction('brusselsSprouts',i)
-  }))
+
+
+// with THEN  ! 
+// const BrusselSprout =  () =>{
+//   return Promise.all(brusselsSprouts.map( async(step,i) => {
+//     return  obtainInstruction('brusselsSprouts',i)
+//   }))
+// }
+
+//   BrusselSprout().then(x=>{
+//     x.forEach(val=>{
+//     document.querySelector("#brusselsSprouts").innerHTML += `<li>${val}</li>`})
+//     document.querySelector("#brusselsSprouts").innerHTML += `<li>Brussel Sprout are Ready!</li>`
+//      document.querySelector('#brusselsSproutsImg').removeAttribute('hidden')
+//     }
+//   )
+
+
+const fn = async () =>{
+  const BrusselSprout =  () =>{
+    return Promise.all(brusselsSprouts.map( async(step,i) => {
+      return  obtainInstruction('brusselsSprouts',i)
+    }))
+  }
+  const arrayToPrint = await BrusselSprout()
+  arrayToPrint.forEach( val=>{
+      document.querySelector("#brusselsSprouts").innerHTML += `<li>${val}</li>`
+  })
+  document.querySelector("#brusselsSprouts").innerHTML += `<li>Brussel Sprout are Ready!</li>`
+  document.querySelector('#brusselsSproutsImg').removeAttribute('hidden')
 }
 
-BrusselSprout().then(x=>{
-  x.forEach(val=>{
-  document.querySelector("#brusselsSprouts").innerHTML += `<li>${val}</li>`})
-  document.querySelector("#brusselsSprouts").innerHTML += `<li>Brussel Sprout are Ready!</li>`
-  }
-)
+fn()
